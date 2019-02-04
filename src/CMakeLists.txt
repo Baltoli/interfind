@@ -25,3 +25,5 @@ conan_cmake_run(CONANFILE "../conanfile.txt"
 
 include(GNUInstallDirs)
 enable_testing()
+
+add_subdirectory(app)
