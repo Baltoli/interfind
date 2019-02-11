@@ -1,12 +1,14 @@
 project(libinterfind VERSION 0.1 LANGUAGES CXX)
 
 add_library(interfind
+  src/analysis.cpp
   src/finder.cpp
 )
 
 target_link_libraries(interfind
   ${llvm_libs}
   CONAN_PKG::fmt
+  CONAN_PKG::jsonformoderncpp
 )
 
 target_include_directories(interfind PUBLIC

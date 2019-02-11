@@ -17,7 +17,7 @@ include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 message(STATUS "${LLVM_TOOLS_BINARY_DIR}")
 llvm_map_components_to_libnames(llvm_libs
-  core support irreader)
+  core support irreader transformutils bitwriter)
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(CONANFILE "../conanfile.txt"
