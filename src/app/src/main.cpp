@@ -4,6 +4,7 @@
 #include <llvm/IR/Module.h>
 #include <llvm/IRReader/IRReader.h>
 #include <llvm/Support/CommandLine.h>
+#include <llvm/Support/MemoryBuffer.h>
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/SourceMgr.h>
 
@@ -11,6 +12,7 @@
 
 #include <filesystem>
 #include <string>
+#include <string_view>
 
 using namespace llvm;
 using json = nlohmann::json;
@@ -71,7 +73,7 @@ cl::opt<std::string> Output(
 cl::alias OutputShort(
     "o", cl::desc("Alias for -output"), cl::aliasopt(Output));
 
-int main(int argc, char **argv)
+int main(int argc, char **argv) try
 {
   cl::ParseCommandLineOptions(argc, argv);
 
@@ -92,4 +94,22 @@ int main(int argc, char **argv)
 
     return 2;
   }
+
+  auto buffer = MemoryBuffer::getFile(config_path.string());
+  if(auto err_code = buffer.getError()) {
+    errs() << fmt::format(
+      "Error opening memory buffer from file: {}\nError: {}\n", 
+      config_path.string(),
+      err_code.message()
+    );
+  }
+
+  auto config_view = std::string_view(
+    buffer.get()->getBufferStart(), 
+    buffer.get()->getBufferSize());
+
+  auto json = json::parse(config_view);
+} catch(json::parse_error const& pe) {
+  errs() << fmt::format("Error parsing JSON file: {}\n", pe.what());
+  std::exit(3);
 }
