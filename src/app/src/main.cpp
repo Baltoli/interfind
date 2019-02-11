@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 
   auto config_path = fs::path(ConfigPath.getValue());
   if(!fs::exists(config_path)) {
-    errs() <<  fmt::format(
+    errs() << fmt::format(
       "Config file does not exist: {}\n", config_path.string()
     );
 

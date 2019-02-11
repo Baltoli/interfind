@@ -12,3 +12,5 @@ target_link_libraries(interfind
 install(
   TARGETS interfind
   DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+add_subdirectory(test/inputs)
