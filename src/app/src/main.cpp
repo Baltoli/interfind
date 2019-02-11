@@ -1,4 +1,9 @@
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
+#include <llvm/IRReader/IRReader.h>
 #include <llvm/Support/CommandLine.h>
+#include <llvm/Support/raw_ostream.h>
+#include <llvm/Support/SourceMgr.h>
 
 #include <string>
 
@@ -54,4 +59,13 @@ cl::alias OutputShort(
 int main(int argc, char **argv)
 {
   cl::ParseCommandLineOptions(argc, argv);
+
+  auto ctx = LLVMContext{};
+  auto err = SMDiagnostic{};
+
+  auto mod = parseIRFile(InputFilename, err, ctx, true, "");
+  if(!mod) {
+    err.print(argv[0], errs());
+    return 1;
+  }
 }
