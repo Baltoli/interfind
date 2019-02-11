@@ -1,3 +1,5 @@
+#include <fmt/format.h>
+
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
 #include <llvm/IRReader/IRReader.h>
@@ -7,10 +9,12 @@
 
 #include <nlohmann/json.hpp>
 
+#include <filesystem>
 #include <string>
 
 using namespace llvm;
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 /**
  * The input bitcode file to process. Reads from a filename by default, but can
@@ -78,5 +82,14 @@ int main(int argc, char **argv)
   if(!mod) {
     err.print(argv[0], errs());
     return 1;
+  }
+
+  auto config_path = fs::path(ConfigPath.getValue());
+  if(!fs::exists(config_path)) {
+    errs() <<  fmt::format(
+      "Config file does not exist: {}\n", config_path.string()
+    );
+
+    return 2;
   }
 }

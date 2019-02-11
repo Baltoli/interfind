@@ -4,6 +4,8 @@ add_executable(interfind
 
 target_link_libraries(interfind
   ${llvm_libs}
+  stdc++fs
+  CONAN_PKG::fmt
   CONAN_PKG::jsonformoderncpp
 )
 
