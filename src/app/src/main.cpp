@@ -18,6 +18,14 @@ cl::opt<std::string> InputFilename(
     cl::Positional, cl::desc("<input file>"), cl::Required);
 
 /**
+ * The path of a configuration file specifying how to examine the IR in
+ * question. The config is free-form JSON and individual components of InterFind
+ * will complain if they don't have the right information passed to them.
+ */
+cl::opt<std::string> ConfigPath(
+    cl::Positional, cl::desc("<config file>"), cl::Required);
+
+/**
  * Silence the analysis output from the tool - if it's silent then any results
  * won't be printed anywhere. This might be useful if you're running the tool
  * in the context of a build system.
