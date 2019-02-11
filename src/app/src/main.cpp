@@ -12,7 +12,6 @@
 
 #include <filesystem>
 #include <string>
-#include <string_view>
 
 using namespace llvm;
 using json = nlohmann::json;
@@ -104,11 +103,9 @@ int main(int argc, char **argv) try
     );
   }
 
-  auto config_view = std::string_view(
+  auto json = json::parse(
     buffer.get()->getBufferStart(), 
-    buffer.get()->getBufferSize());
-
-  auto json = json::parse(config_view);
+    buffer.get()->getBufferEnd());
 } catch(json::parse_error const& pe) {
   errs() << fmt::format("Error parsing JSON file: {}\n", pe.what());
   std::exit(3);
