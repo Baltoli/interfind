@@ -106,6 +106,7 @@ int main(int argc, char **argv) try
   auto json = json::parse(
     buffer.get()->getBufferStart(), 
     buffer.get()->getBufferEnd());
+
 } catch(json::parse_error const& pe) {
   errs() << fmt::format("Error parsing JSON file: {}\n", pe.what());
   std::exit(3);
