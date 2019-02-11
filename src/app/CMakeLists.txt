@@ -4,6 +4,7 @@ add_executable(interfind
 
 target_link_libraries(interfind
   ${llvm_libs}
+  CONAN_PKG::jsonformoderncpp
 )
 
 install(

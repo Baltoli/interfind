@@ -5,9 +5,12 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/SourceMgr.h>
 
+#include <nlohmann/json.hpp>
+
 #include <string>
 
 using namespace llvm;
+using json = nlohmann::json;
 
 /**
  * The input bitcode file to process. Reads from a filename by default, but can
